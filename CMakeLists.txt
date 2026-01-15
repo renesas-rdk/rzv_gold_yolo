@@ -7,7 +7,6 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
 find_package(rzv_model REQUIRED)
 
 # create target
@@ -22,11 +21,11 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE
   $<BUILD_INTERFACE:/usr/include/renesas/opencv4>
+  $<BUILD_INTERFACE:$ENV{TVM_ROOT}/3rdparty/spdlog/include>
 )
 
 # ROS2 dependencies
 ament_target_dependencies(${PROJECT_NAME}
-  rclcpp
   rzv_model
 )
 
