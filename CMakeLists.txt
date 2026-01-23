@@ -8,6 +8,7 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rzv_model REQUIRED)
+find_package(OpenCV REQUIRED COMPONENTS core imgproc)
 
 # create target
 add_library(${PROJECT_NAME} SHARED
@@ -19,24 +20,14 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
-target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE
-  $<BUILD_INTERFACE:/usr/include/renesas/opencv4>
-  $<BUILD_INTERFACE:$ENV{TVM_ROOT}/3rdparty/spdlog/include>
-)
 
-# ROS2 dependencies
+# rzv_model dependencies
 ament_target_dependencies(${PROJECT_NAME}
   rzv_model
 )
 
-# Non-ROS2 dependencies
-if(NOT DEFINED RENESAS_LIB_PATH) # Allow overriding via cross compilation
-  set(RENESAS_LIB_PATH "/usr/lib/aarch64-linux-gnu/renesas")
-endif()
-
 target_link_libraries(${PROJECT_NAME}
-  ${RENESAS_LIB_PATH}/libopencv_core.so
-  ${RENESAS_LIB_PATH}/libopencv_imgproc.so
+  ${OpenCV_LIBRARIES}
 )
 
 install(
