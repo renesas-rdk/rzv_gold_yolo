@@ -45,6 +45,7 @@ install(
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
 ament_export_targets(${PROJECT_NAME})
+ament_export_dependencies(rzv_model)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
