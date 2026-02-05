@@ -203,8 +203,8 @@ std::unique_ptr<ModelResult> GoldYoloModel::postprocess(const std::vector<cv::Ma
   }
 
   // Apply Non-Maximum Suppression
-  std::vector<int> indices = Utils::non_maximum_suppression(
-    bboxes, confidences, get_confidence_threshold(), get_iou_threshold());
+  std::vector<int> indices = Utils::non_maximum_suppression_batched(
+    bboxes, confidences, class_ids, get_confidence_threshold(), get_iou_threshold());
   MODEL_DEBUG("NMS returned {} indices", indices.size());
 
   // Process the kept detections
